@@ -95,6 +95,6 @@ void sendMQTT() {
   unsigned long now = millis();
   if (now - lastMsg > 2000) {
     lastMsg = now;
-    client.publish("aTopic", "Hello world");
+    client.publish("Hallo von WIO!!!", "zweite msg");
   }
 }
