@@ -4,6 +4,7 @@
 #include "Seeed_HM330X.h"
 #include <TFT_eSPI.h>
 #include <SparkFunBQ27441.h>
+#include <PubSubClient.h>
 #include <Wire.h>
 #include "rpcWiFi.h"
 
@@ -48,5 +49,6 @@ void connectToWiFi();
 void sendDataToServer(const char* message);
 HM330XErrorCode parse_pm_data(u8* data);
 void updateDisplay();
+void sendMQTT();
 
 #endif

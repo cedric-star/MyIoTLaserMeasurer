@@ -83,7 +83,7 @@ void loop() {
   // Nur senden, wenn WiFi verbunden ist und Intervall erreicht
   unsigned long current_time = millis();
   if (wifi_connected) {
-    sendDataToServer(message);
+    
     last_send_time = current_time;
   } else if (!wifi_connected) {
     // Versuche alle 30 Sekunden erneut zu verbinden
@@ -93,6 +93,7 @@ void loop() {
       last_reconnect = current_time;
     }
   }
+  sendMQTT();
 
   delay(5000);
 }
