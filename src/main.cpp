@@ -6,8 +6,9 @@ HM330X sensor;
 const unsigned int BATTERY_CAPACITY = 650;
 
 // WiFi Credentials
-const char* ssid = WIFI_SSID;
-const char* password = WIFI_PASSWORD;
+const char* ssid = WIFI_SSID;       // Ändern Sie dies
+const char* password = WIFI_PASS;  // Ändern Sie dies
+
 // Server information
 const char* server_ip = "192.168.178.130";  // IP-Adresse Ihres Servers
 const int server_port = 9050;
