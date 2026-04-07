@@ -1,4 +1,6 @@
 #include "project.h"
+#include "env.h"
+
 
 // Definitionen der globalen Variablen
 TFT_eSPI tft;
