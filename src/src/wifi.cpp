@@ -2,7 +2,7 @@
 
 
 const char *ID = "mynode";
-const char *server = "172.20.10.9"; 
+const char *server = "192.168.178.27"; 
 WiFiClient wifiClient;
 PubSubClient client(wifiClient);
 unsigned long lastMsg = 0;
@@ -44,13 +44,6 @@ void reconnect() {
 
 
 void connectToWiFi() {
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-  tft.setCursor(10, 40);
-  tft.print("Connecting to WiFi...");
-  tft.setCursor(10, 60);
-  tft.print(ssid);
-
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
@@ -63,19 +56,9 @@ void connectToWiFi() {
 
   if (WiFi.status() == WL_CONNECTED) {
     wifi_connected = true;
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextColor(TFT_GREEN, TFT_BLACK);
-    tft.setCursor(10, 40);
-    tft.print("WiFi Connected!");
-    tft.setCursor(10, 60);
-    tft.print("IP: ");
-    tft.print(WiFi.localIP());
-    delay(2000);
+    delay(1000);
   } else {
-    tft.setTextColor(TFT_RED, TFT_BLACK);
-    tft.setCursor(10, 80);
-    tft.print("WiFi Failed!");
-    delay(2000);
+    delay(1000);
   }
 
 

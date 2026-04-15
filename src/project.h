@@ -38,7 +38,6 @@ struct PMValues {
   u16 pm10_atm;
 };
 
-extern PMValues pmValues;
 extern bool wifi_connected;
 extern unsigned long last_send_time;
 extern const unsigned long send_interval;
@@ -47,8 +46,8 @@ extern const unsigned long send_interval;
 void setupBQ27441(void);
 void connectToWiFi();
 void sendDataToServer(const char* message);
-HM330XErrorCode parse_pm_data(u8* data);
-void updateDisplay();
+HM330XErrorCode parse_pm_data(u8* data, PMValues *pmValues);
+void updateDisplay(PMValues *pmValues);
 void sendMQTT();
 
 #endif
