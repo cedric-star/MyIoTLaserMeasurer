@@ -1,6 +1,5 @@
 #include "project.h"
 
-
 const char *ID = "mynode";
 const char *server = "192.168.178.27"; 
 WiFiClient wifiClient;
@@ -11,27 +10,18 @@ char msg[MSG_BUFFER_SIZE];
 int value = 0;
 
 void reconnect() {
-  // Loop until we're reconnected
-  while (!client.connected())
+  if (!client.connected())
   {
-    Serial.print("Attempting MQTT connection...");
-    // Attempt to connect
     if (client.connect(ID)) {
       Serial.println("connected");
     }
     else {
-      Serial.print("failed, rc=");
+      Serial.print("failed: ");
       Serial.print(client.state());
       Serial.println(" try again in 5 seconds");
-      // Wait 5 seconds before retrying
-      delay(5000);
     }
   }
 }
-
-
-
-
 
 
 void connectToWiFi() {
@@ -51,13 +41,8 @@ void connectToWiFi() {
   } else {
     delay(1000);
   }
-
-
   client.setServer(server, 1883);
 }
-
-
-
 
 
 void sendMQTT(char* msg) {
@@ -66,4 +51,5 @@ void sendMQTT(char* msg) {
   }
   client.loop();
   client.publish("/sensors/laser", msg);
+  
 }

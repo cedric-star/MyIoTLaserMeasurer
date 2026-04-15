@@ -9,8 +9,8 @@ const unsigned int BATTERY_CAPACITY = 650;
 const char* ssid = WIFI_SSID;      
 const char* password = WIFI_PASS;  
 
-const char* server_ip = "192.168.178.130";  //nodered ip
-const int server_port = 9050;
+const char* server_ip = SERVER_URL; //nodered ip
+const int server_port = SERVER_PORT;
 
 // buffer sensordaten
 u8 buf[30];

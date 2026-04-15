@@ -5,9 +5,6 @@ void updateDisplay(PMValues *pmValues) {
   tft.setTextSize(2);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
 
-
-
-
   // PM1.0
   tft.setCursor(10, 10);
   tft.print("PM1.0:");
@@ -60,4 +57,17 @@ void updateDisplay(PMValues *pmValues) {
   tft.print(charge);
   tft.print("% WiFi: ");
   tft.print(wifi_connected ? "OK" : "NO");
+
+  //zeit
+  time_t now = time(NULL);         // Get current time
+  struct tm *t = localtime(&now);  // Convert to local time structure
+  char time_buf[64];
+  int hour = t->tm_hour;
+  int minute = t->tm_min;
+  int day = t->tm_mday;
+  int month = t->tm_mon + 1;
+  int year = t->tm_year + 190;
+  sprintf(time_buf, "  |  %d:%d %d %d %d", hour, minute, day, month, year);
+
+  tft.print(time_buf);  
 }
