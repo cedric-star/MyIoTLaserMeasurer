@@ -46,12 +46,12 @@ void loop() {
   }
 
   char message[256];
-  sprintf(message, "{\"PM1.0\": %d, \"PM2.5\": %d, \"PM10\": %d, \"Battery\": %d}",
+  sprintf(message, "{\"PM1\": %d, \"PM25\": %d, \"PM10\": %d, \"Battery\": %d}",
           pmValues.pm1_0_atm,
           pmValues.pm2_5_atm,
           pmValues.pm10_atm,
           lipo.soc());
   sendMQTT(message);
 
-  delay(1000);
+  delay(5000);
 }
