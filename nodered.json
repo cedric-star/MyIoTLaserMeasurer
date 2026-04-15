@@ -8,6 +8,140 @@
         "env": []
     },
     {
+        "id": "067a7c507dfcf31c",
+        "type": "mqtt-broker",
+        "name": "my fochtman iot partikelmesser",
+        "broker": "192.168.178.27",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "eaac889f5e322718",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "21ebb853dba7f001",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "e493ab9eaa1479f7",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "eaac889f5e322718",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "21ebb853dba7f001",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": 0,
+                "cols": 3
+            },
+            {
+                "name": "Tablet",
+                "px": 576,
+                "cols": 6
+            },
+            {
+                "name": "Small Desktop",
+                "px": 768,
+                "cols": 9
+            },
+            {
+                "name": "Desktop",
+                "px": 1024,
+                "cols": 12
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "64d550f7eac26f37",
+        "type": "ui-group",
+        "name": "Battery",
+        "page": "e493ab9eaa1479f7",
+        "width": 6,
+        "height": 1,
+        "order": 2,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "53924c45717ca49a",
+        "type": "ui-group",
+        "name": "dust",
+        "page": "e493ab9eaa1479f7",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
         "id": "31a24d2b3caf6fbd",
         "type": "aedes broker",
         "z": "5f122a2ef76af880",
@@ -220,7 +354,7 @@
         "yAxisLabel": "",
         "yAxisProperty": "payload",
         "yAxisPropertyType": "msg",
-        "ymin": "-10",
+        "ymin": "0",
         "ymax": "400",
         "bins": 10,
         "action": "append",
@@ -232,9 +366,9 @@
         "removeOlderUnit": "3600",
         "removeOlderPoints": "",
         "colors": [
-            "#0095ff",
-            "#ff0000",
-            "#ff7f0e",
+            "#f5c211",
+            "#e66100",
+            "#c01c28",
             "#2ca02c",
             "#a347e1",
             "#d62728",
@@ -261,146 +395,12 @@
         ]
     },
     {
-        "id": "067a7c507dfcf31c",
-        "type": "mqtt-broker",
-        "name": "my fochtman iot partikelmesser",
-        "broker": "192.168.178.27",
-        "port": 1883,
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": 4,
-        "keepalive": 60,
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthRetain": "false",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closeRetain": "false",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
-    },
-    {
-        "id": "64d550f7eac26f37",
-        "type": "ui-group",
-        "name": "Battery",
-        "page": "e493ab9eaa1479f7",
-        "width": 6,
-        "height": 1,
-        "order": 2,
-        "showTitle": true,
-        "className": "",
-        "visible": "true",
-        "disabled": "false",
-        "groupType": "default"
-    },
-    {
-        "id": "53924c45717ca49a",
-        "type": "ui-group",
-        "name": "dust",
-        "page": "e493ab9eaa1479f7",
-        "width": 6,
-        "height": 1,
-        "order": 1,
-        "showTitle": true,
-        "className": "",
-        "visible": "true",
-        "disabled": "false",
-        "groupType": "default"
-    },
-    {
-        "id": "e493ab9eaa1479f7",
-        "type": "ui-page",
-        "name": "Page 1",
-        "ui": "eaac889f5e322718",
-        "path": "/page1",
-        "icon": "home",
-        "layout": "grid",
-        "theme": "21ebb853dba7f001",
-        "breakpoints": [
-            {
-                "name": "Default",
-                "px": 0,
-                "cols": 3
-            },
-            {
-                "name": "Tablet",
-                "px": 576,
-                "cols": 6
-            },
-            {
-                "name": "Small Desktop",
-                "px": 768,
-                "cols": 9
-            },
-            {
-                "name": "Desktop",
-                "px": 1024,
-                "cols": 12
-            }
-        ],
-        "order": 1,
-        "className": "",
-        "visible": "true",
-        "disabled": "false"
-    },
-    {
-        "id": "eaac889f5e322718",
-        "type": "ui-base",
-        "name": "My Dashboard",
-        "path": "/dashboard",
-        "appIcon": "",
-        "includeClientData": true,
-        "acceptsClientConfig": [
-            "ui-notification",
-            "ui-control"
-        ],
-        "showPathInSidebar": false,
-        "headerContent": "page",
-        "navigationStyle": "default",
-        "titleBarStyle": "default",
-        "showReconnectNotification": true,
-        "notificationDisplayTime": 1,
-        "showDisconnectNotification": true,
-        "allowInstall": false
-    },
-    {
-        "id": "21ebb853dba7f001",
-        "type": "ui-theme",
-        "name": "Default Theme",
-        "colors": {
-            "surface": "#ffffff",
-            "primary": "#0094CE",
-            "bgPage": "#eeeeee",
-            "groupBg": "#ffffff",
-            "groupOutline": "#cccccc"
-        },
-        "sizes": {
-            "density": "default",
-            "pagePadding": "12px",
-            "groupGap": "12px",
-            "groupBorderRadius": "4px",
-            "widgetGap": "12px"
-        }
-    },
-    {
-        "id": "5eb22aa0ae07ed74",
+        "id": "a78bbb64e3e74237",
         "type": "global-config",
         "env": [],
         "modules": {
-            "node-red-contrib-aedes": "1.2.0",
-            "@flowfuse/node-red-dashboard": "1.30.2"
+            "@flowfuse/node-red-dashboard": "1.30.2",
+            "node-red-contrib-aedes": "1.2.0"
         }
     }
 ]

@@ -18,7 +18,6 @@ void reconnect() {
     else {
       Serial.print("failed: ");
       Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
     }
   }
 }
@@ -29,7 +28,7 @@ void connectToWiFi() {
   WiFi.begin(ssid, password);
 
   int attempts = 0;
-  while (WiFi.status() != WL_CONNECTED && attempts < 20) {
+  while (WiFi.status() != WL_CONNECTED && attempts < 10) {
     delay(500);
     tft.print(".");
     attempts++;
@@ -41,7 +40,7 @@ void connectToWiFi() {
   } else {
     delay(1000);
   }
-  client.setServer(server, 1883);
+  client.setServer(server, server_port);
 }
 
 
