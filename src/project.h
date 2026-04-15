@@ -30,10 +30,10 @@ extern u8 buf[30];
 
 // Strukturen
 struct PMValues {
-  u16 pm1_0_cf;
+  u16 pm1_0_cf; //cfh werte unter standardisierten bedingungen
   u16 pm2_5_cf;
   u16 pm10_cf;
-  u16 pm1_0_atm;
+  u16 pm1_0_atm; //atm werte unter gegebenen bedingungen
   u16 pm2_5_atm;
   u16 pm10_atm;
 };
@@ -48,6 +48,6 @@ void connectToWiFi();
 void sendDataToServer(const char* message);
 HM330XErrorCode parse_pm_data(u8* data, PMValues *pmValues);
 void updateDisplay(PMValues *pmValues);
-void sendMQTT();
+void sendMQTT(char* msg);
 
 #endif

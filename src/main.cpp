@@ -40,19 +40,18 @@ void loop() {
   parse_pm_data(buf, &pmValues);
   updateDisplay(&pmValues);
 
-  char message[256];
-  sprintf(message, "PM1.0: %d, PM2.5: %d, PM10: %d, Battery: %d%%",
-          pmValues.pm1_0_atm,
-          pmValues.pm2_5_atm,
-          pmValues.pm10_atm,
-          lipo.soc());
-
 
   if (!wifi_connected) {
     connectToWiFi();
   }
 
-  sendMQTT();
+  char message[256];
+  sprintf(message, "{\"PM1.0\": %d, \"PM2.5\": %d, \"PM10\": %d, \"Battery\": %d}",
+          pmValues.pm1_0_atm,
+          pmValues.pm2_5_atm,
+          pmValues.pm10_atm,
+          lipo.soc());
+  sendMQTT(message);
 
   delay(1000);
 }

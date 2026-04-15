@@ -60,7 +60,4 @@ void updateDisplay(PMValues *pmValues) {
   tft.print(charge);
   tft.print("% WiFi: ");
   tft.print(wifi_connected ? "OK" : "NO");
-
-  // WHO Guideline
-  tft.print("WHO Guideline: <5 ug/m3");
 }

@@ -10,15 +10,6 @@ unsigned long lastMsg = 0;
 char msg[MSG_BUFFER_SIZE];
 int value = 0;
 
-void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
-  for (int i = 0; i < length; i++) {
-    Serial.print((char)payload[i]);
-  }
-  Serial.println();
-}
 void reconnect() {
   // Loop until we're reconnected
   while (!client.connected())
@@ -63,21 +54,16 @@ void connectToWiFi() {
 
 
   client.setServer(server, 1883);
-  client.setCallback(callback);
 }
 
 
 
 
 
-void sendMQTT() {
+void sendMQTT(char* msg) {
   if (!client.connected()) {
     reconnect();
   }
   client.loop();
-  unsigned long now = millis();
-  if (now - lastMsg > 2000) {
-    lastMsg = now;
-    client.publish("Hallo von WIO!!!", "zweite msg");
-  }
+  client.publish("/sensors/laser", msg);
 }
