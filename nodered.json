@@ -1,0 +1,406 @@
+[
+    {
+        "id": "5f122a2ef76af880",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "31a24d2b3caf6fbd",
+        "type": "aedes broker",
+        "z": "5f122a2ef76af880",
+        "name": "",
+        "mqtt_port": 1883,
+        "mqtt_ws_bind": "port",
+        "mqtt_ws_port": "",
+        "mqtt_ws_path": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "persistence_bind": "memory",
+        "dburl": "",
+        "persist_to_file": false,
+        "usetls": false,
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2aee53619d94904d",
+        "type": "mqtt in",
+        "z": "5f122a2ef76af880",
+        "name": "",
+        "topic": "/sensors/laser",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "067a7c507dfcf31c",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 320,
+        "wires": [
+            [
+                "d944b1e6d087b820",
+                "264b12a8ac8ef282",
+                "c9d2e4f2e49bd3b7"
+            ]
+        ]
+    },
+    {
+        "id": "d944b1e6d087b820",
+        "type": "debug",
+        "z": "5f122a2ef76af880",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "264b12a8ac8ef282",
+        "type": "function",
+        "z": "5f122a2ef76af880",
+        "name": "battery",
+        "func": "if (msg.payload && msg.payload.Battery !== undefined) {\n    msg.payload = msg.payload.Battery;\n    \n} else {\n    msg.payload = -1;\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 380,
+        "wires": [
+            [
+                "af1d6620e1ea3c09",
+                "04e75e8ddccd202d"
+            ]
+        ]
+    },
+    {
+        "id": "af1d6620e1ea3c09",
+        "type": "ui-text",
+        "z": "5f122a2ef76af880",
+        "group": "64d550f7eac26f37",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "battery",
+        "label": "Percentage: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 570,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "04e75e8ddccd202d",
+        "type": "ui-gauge",
+        "z": "5f122a2ef76af880",
+        "name": "battery chart",
+        "group": "64d550f7eac26f37",
+        "order": 1,
+        "value": "payload",
+        "valueType": "msg",
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "%",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "40",
+                "color": "#5cd65c",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "10",
+                "color": "#ffc800",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "0",
+                "color": "#ea5353",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "100",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 590,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c9d2e4f2e49bd3b7",
+        "type": "function",
+        "z": "5f122a2ef76af880",
+        "name": "data",
+        "func": "if (msg.payload == undefined) {\n    return msg;  \n} \n\nvar pm1  = msg.payload.PM1;\nvar pm25 = msg.payload.PM25;\nvar pm10 = msg.payload.PM10;\n\nvar msg1 = { payload: pm1, topic: \"PM1.0\" };\nvar msg2 = { payload: pm25, topic: \"PM2.5\" };\nvar msg3 = { payload: pm10, topic: \"PM10\" };\n\nreturn [msg1, msg2, msg3];\n",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 560,
+        "wires": [
+            [
+                "73b7c594e15544f1"
+            ],
+            [
+                "73b7c594e15544f1"
+            ],
+            [
+                "73b7c594e15544f1"
+            ]
+        ]
+    },
+    {
+        "id": "73b7c594e15544f1",
+        "type": "ui-chart",
+        "z": "5f122a2ef76af880",
+        "group": "53924c45717ca49a",
+        "name": "Dust in tha air",
+        "label": "dust chart",
+        "order": 9007199254740991,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "-10",
+        "ymax": "400",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 600,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "067a7c507dfcf31c",
+        "type": "mqtt-broker",
+        "name": "my fochtman iot partikelmesser",
+        "broker": "192.168.178.27",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "64d550f7eac26f37",
+        "type": "ui-group",
+        "name": "Battery",
+        "page": "e493ab9eaa1479f7",
+        "width": 6,
+        "height": 1,
+        "order": 2,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "53924c45717ca49a",
+        "type": "ui-group",
+        "name": "dust",
+        "page": "e493ab9eaa1479f7",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "e493ab9eaa1479f7",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "eaac889f5e322718",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "21ebb853dba7f001",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": 0,
+                "cols": 3
+            },
+            {
+                "name": "Tablet",
+                "px": 576,
+                "cols": 6
+            },
+            {
+                "name": "Small Desktop",
+                "px": 768,
+                "cols": 9
+            },
+            {
+                "name": "Desktop",
+                "px": 1024,
+                "cols": 12
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "eaac889f5e322718",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "21ebb853dba7f001",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "5eb22aa0ae07ed74",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-aedes": "1.2.0",
+            "@flowfuse/node-red-dashboard": "1.30.2"
+        }
+    }
+]
