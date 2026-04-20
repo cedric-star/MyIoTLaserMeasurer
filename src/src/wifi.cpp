@@ -1,7 +1,6 @@
 #include "project.h"
 
 const char *ID = "mynode";
-const char *server = "192.168.178.27"; 
 WiFiClient wifiClient;
 PubSubClient client(wifiClient);
 unsigned long lastMsg = 0;

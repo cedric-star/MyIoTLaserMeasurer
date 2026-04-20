@@ -21,7 +21,7 @@ extern const unsigned int BATTERY_CAPACITY;
 //wifi
 extern const char* ssid;
 extern const char* password;
-extern const char* server_ip;
+extern const char* server;
 extern const int server_port;
 
 //sensor daten butter
