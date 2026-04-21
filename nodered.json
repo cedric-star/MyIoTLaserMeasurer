@@ -1,6 +1,6 @@
 [
     {
-        "id": "5f122a2ef76af880",
+        "id": "e53b1d02762b092d",
         "type": "tab",
         "label": "Flow 1",
         "disabled": false,
@@ -11,7 +11,7 @@
         "id": "067a7c507dfcf31c",
         "type": "mqtt-broker",
         "name": "my fochtman iot partikelmesser",
-        "broker": "192.168.178.27",
+        "broker": "172.20.10.9",
         "port": 1883,
         "clientid": "",
         "autoConnect": true,
@@ -142,9 +142,24 @@
         "groupType": "default"
     },
     {
-        "id": "31a24d2b3caf6fbd",
+        "id": "d76933d367057afb",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "influxdb",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "timeout": "1000",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "f790f0b75932c580",
         "type": "aedes broker",
-        "z": "5f122a2ef76af880",
+        "z": "e53b1d02762b092d",
         "name": "",
         "mqtt_port": 1883,
         "mqtt_ws_bind": "port",
@@ -168,9 +183,9 @@
         ]
     },
     {
-        "id": "2aee53619d94904d",
+        "id": "75e09587ee6f0a20",
         "type": "mqtt in",
-        "z": "5f122a2ef76af880",
+        "z": "e53b1d02762b092d",
         "name": "",
         "topic": "/sensors/laser",
         "qos": "0",
@@ -184,16 +199,17 @@
         "y": 320,
         "wires": [
             [
-                "d944b1e6d087b820",
-                "264b12a8ac8ef282",
-                "c9d2e4f2e49bd3b7"
+                "0b456f0cb46a8748",
+                "37116334c06e36e3",
+                "84ffb4c991970ed9",
+                "27c2f838e126175c"
             ]
         ]
     },
     {
-        "id": "d944b1e6d087b820",
+        "id": "0b456f0cb46a8748",
         "type": "debug",
-        "z": "5f122a2ef76af880",
+        "z": "e53b1d02762b092d",
         "name": "debug 1",
         "active": true,
         "tosidebar": true,
@@ -208,9 +224,9 @@
         "wires": []
     },
     {
-        "id": "264b12a8ac8ef282",
+        "id": "37116334c06e36e3",
         "type": "function",
-        "z": "5f122a2ef76af880",
+        "z": "e53b1d02762b092d",
         "name": "battery",
         "func": "if (msg.payload && msg.payload.Battery !== undefined) {\n    msg.payload = msg.payload.Battery;\n    \n} else {\n    msg.payload = -1;\n}\nreturn msg;",
         "outputs": 1,
@@ -223,15 +239,15 @@
         "y": 380,
         "wires": [
             [
-                "af1d6620e1ea3c09",
-                "04e75e8ddccd202d"
+                "fa739f5a72955e53",
+                "47eba4d6497c78eb"
             ]
         ]
     },
     {
-        "id": "af1d6620e1ea3c09",
+        "id": "fa739f5a72955e53",
         "type": "ui-text",
-        "z": "5f122a2ef76af880",
+        "z": "e53b1d02762b092d",
         "group": "64d550f7eac26f37",
         "order": 2,
         "width": 0,
@@ -253,9 +269,9 @@
         "wires": []
     },
     {
-        "id": "04e75e8ddccd202d",
+        "id": "47eba4d6497c78eb",
         "type": "ui-gauge",
-        "z": "5f122a2ef76af880",
+        "z": "e53b1d02762b092d",
         "name": "battery chart",
         "group": "64d550f7eac26f37",
         "order": 1,
@@ -307,9 +323,9 @@
         ]
     },
     {
-        "id": "c9d2e4f2e49bd3b7",
+        "id": "84ffb4c991970ed9",
         "type": "function",
-        "z": "5f122a2ef76af880",
+        "z": "e53b1d02762b092d",
         "name": "data",
         "func": "if (msg.payload == undefined) {\n    return msg;  \n} \n\nvar pm1  = msg.payload.PM1;\nvar pm25 = msg.payload.PM25;\nvar pm10 = msg.payload.PM10;\n\nvar msg1 = { payload: pm1, topic: \"PM1.0\" };\nvar msg2 = { payload: pm25, topic: \"PM2.5\" };\nvar msg3 = { payload: pm10, topic: \"PM10\" };\n\nreturn [msg1, msg2, msg3];\n",
         "outputs": 3,
@@ -322,24 +338,24 @@
         "y": 560,
         "wires": [
             [
-                "73b7c594e15544f1"
+                "649849556d44c30b"
             ],
             [
-                "73b7c594e15544f1"
+                "649849556d44c30b"
             ],
             [
-                "73b7c594e15544f1"
+                "649849556d44c30b"
             ]
         ]
     },
     {
-        "id": "73b7c594e15544f1",
+        "id": "649849556d44c30b",
         "type": "ui-chart",
-        "z": "5f122a2ef76af880",
+        "z": "e53b1d02762b092d",
         "group": "53924c45717ca49a",
         "name": "Dust in tha air",
         "label": "dust chart",
-        "order": 9007199254740991,
+        "order": 1,
         "chartType": "line",
         "category": "topic",
         "categoryType": "msg",
@@ -355,7 +371,7 @@
         "yAxisProperty": "payload",
         "yAxisPropertyType": "msg",
         "ymin": "0",
-        "ymax": "400",
+        "ymax": "40",
         "bins": 10,
         "action": "append",
         "stackSeries": false,
@@ -395,11 +411,67 @@
         ]
     },
     {
-        "id": "a78bbb64e3e74237",
+        "id": "27c2f838e126175c",
+        "type": "function",
+        "z": "e53b1d02762b092d",
+        "name": "function 1",
+        "func": "// Prüfen, ob Daten angekommen sind\nif (msg.payload === undefined) {\n    return msg;\n}\n\n// Aufbereiten der Daten für InfluxDB\nmsg.payload = [\n    {\n        // Fields: Deine gemessenen Werte\n        pm1: parseFloat(msg.payload.PM1),\n        pm25: parseFloat(msg.payload.PM25),\n        pm10: parseFloat(msg.payload.PM10),\n        battery: parseFloat(msg.payload.Battery)  // Battery optional\n    },\n    {\n        // Tags: Beschreibende Metadaten\n        standort: \"zimmer\",\n        sensor: \"hm300x\"\n    }\n];\n\n// WICHTIG: Hier wird der Measurement-Name gesetzt\nmsg.measurement = \"luftqualitaet\";\n\n// Gib die Nachricht aus\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 660,
+        "wires": [
+            [
+                "27c9dc73018235bd"
+            ]
+        ]
+    },
+    {
+        "id": "28bb41deb03c91af",
+        "type": "influxdb in",
+        "z": "e53b1d02762b092d",
+        "influxdb": "d76933d367057afb",
+        "name": "",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 600,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "27c9dc73018235bd",
+        "type": "influxdb out",
+        "z": "e53b1d02762b092d",
+        "influxdb": "d76933d367057afb",
+        "name": "",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "dinge",
+        "bucket": "luftqualitaet",
+        "x": 600,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "30109f4cdbcfda7c",
         "type": "global-config",
         "env": [],
         "modules": {
             "@flowfuse/node-red-dashboard": "1.30.2",
+            "node-red-contrib-influxdb": "0.7.0",
             "node-red-contrib-aedes": "1.2.0"
         }
     }

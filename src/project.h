@@ -29,10 +29,10 @@ extern u8 buf[30];
 
 struct PMValues {
   u16 pm1_0_cf; //cfh werte unter standardisierten bedingungen
-  u16 pm2_5_cf;
+  u16 pm2_5_cf; //in industrieanlagen und os verwendet 
   u16 pm10_cf;
   u16 pm1_0_atm; //atm werte unter gegebenen bedingungen
-  u16 pm2_5_atm;
+  u16 pm2_5_atm; //halt für draußen und drinnen
   u16 pm10_atm;
 };
 
