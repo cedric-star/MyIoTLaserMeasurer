@@ -52,5 +52,5 @@ void loop() {
           lipo.soc());
   sendMQTT(message);
 
-  delay(5000);
+  delay(2000);
 }
