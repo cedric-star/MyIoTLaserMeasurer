@@ -1,0 +1,44 @@
+[
+  {
+    "id": "27c9dc73018235bd",
+    "type": "influxdb out",
+    "z": "e53b1d02762b092d",
+    "influxdb": "d76933d367057afb",
+    "name": "",
+    "measurement": "",
+    "precision": "",
+    "retentionPolicy": "",
+    "database": "database",
+    "precisionV18FluxV20": "ms",
+    "retentionPolicyV18Flux": "",
+    "org": "dinge",
+    "bucket": "luftqualitaet",
+    "x": 600,
+    "y": 720,
+    "wires": []
+  },
+  {
+    "id": "d76933d367057afb",
+    "type": "influxdb",
+    "hostname": "127.0.0.1",
+    "port": 8086,
+    "protocol": "http",
+    "database": "database",
+    "name": "influxdb",
+    "usetls": false,
+    "tls": "",
+    "influxdbVersion": "2.0",
+    "url": "http://localhost:8086",
+    "timeout": "1000",
+    "rejectUnauthorized": true
+  },
+  {
+    "id": "9b4a6c29b14f1a86",
+    "type": "global-config",
+    "env": [],
+    "modules": {
+      "node-red-contrib-influxdb": "0.7.0"
+    }
+  }
+]
+
