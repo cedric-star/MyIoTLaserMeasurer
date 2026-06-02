@@ -1,508 +1,490 @@
 [
-  {
-    "id": "e53b1d02762b092d",
-    "type": "tab",
-    "label": "Flow 1",
-    "disabled": false,
-    "info": "",
-    "env": []
-  },
-  {
-    "id": "f790f0b75932c580",
-    "type": "aedes broker",
-    "z": "e53b1d02762b092d",
-    "name": "",
-    "mqtt_port": 1883,
-    "mqtt_ws_bind": "port",
-    "mqtt_ws_port": "",
-    "mqtt_ws_path": "",
-    "cert": "",
-    "key": "",
-    "ca": "",
-    "certname": "",
-    "keyname": "",
-    "caname": "",
-    "persistence_bind": "memory",
-    "dburl": "",
-    "persist_to_file": false,
-    "usetls": false,
-    "x": 170,
-    "y": 220,
-    "wires": [
-      [],
-      []
-    ]
-  },
-  {
-    "id": "75e09587ee6f0a20",
-    "type": "mqtt in",
-    "z": "e53b1d02762b092d",
-    "name": "",
-    "topic": "/sensors/laser",
-    "qos": "0",
-    "datatype": "auto-detect",
-    "broker": "067a7c507dfcf31c",
-    "nl": false,
-    "rap": true,
-    "rh": 0,
-    "inputs": 0,
-    "x": 150,
-    "y": 320,
-    "wires": [
-      [
-        "0b456f0cb46a8748",
-        "37116334c06e36e3",
-        "84ffb4c991970ed9",
-        "27c2f838e126175c"
-      ]
-    ]
-  },
-  {
-    "id": "0b456f0cb46a8748",
-    "type": "debug",
-    "z": "e53b1d02762b092d",
-    "name": "debug mqtt",
-    "active": true,
-    "tosidebar": true,
-    "console": false,
-    "tostatus": false,
-    "complete": "payload",
-    "targetType": "msg",
-    "statusVal": "",
-    "statusType": "auto",
-    "x": 410,
-    "y": 240,
-    "wires": []
-  },
-  {
-    "id": "37116334c06e36e3",
-    "type": "function",
-    "z": "e53b1d02762b092d",
-    "name": "battery",
-    "func": "if (msg.payload && msg.payload.Battery !== undefined) {\n    msg.payload = msg.payload.Battery;\n    \n} else {\n    msg.payload = -1;\n}\nreturn msg;",
-    "outputs": 1,
-    "timeout": 0,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 390,
-    "y": 320,
-    "wires": [
-      [
-        "fa739f5a72955e53",
-        "47eba4d6497c78eb"
-      ]
-    ]
-  },
-  {
-    "id": "fa739f5a72955e53",
-    "type": "ui-text",
-    "z": "e53b1d02762b092d",
-    "group": "64d550f7eac26f37",
-    "order": 2,
-    "width": 0,
-    "height": 0,
-    "name": "battery",
-    "label": "Percentage: ",
-    "format": "{{msg.payload}}",
-    "layout": "row-left",
-    "style": false,
-    "font": "",
-    "fontSize": 16,
-    "color": "#717171",
-    "wrapText": false,
-    "className": "",
-    "value": "payload",
-    "valueType": "msg",
-    "x": 570,
-    "y": 300,
-    "wires": []
-  },
-  {
-    "id": "47eba4d6497c78eb",
-    "type": "ui-gauge",
-    "z": "e53b1d02762b092d",
-    "name": "battery chart",
-    "group": "64d550f7eac26f37",
-    "order": 1,
-    "value": "payload",
-    "valueType": "msg",
-    "width": 3,
-    "height": 3,
-    "gtype": "gauge-half",
-    "gstyle": "needle",
-    "title": "",
-    "alwaysShowTitle": false,
-    "floatingTitlePosition": "top-left",
-    "units": "%",
-    "icon": "",
-    "prefix": "",
-    "suffix": "",
-    "segments": [
-      {
-        "from": "40",
-        "color": "#5cd65c",
-        "text": "",
-        "textType": "label"
-      },
-      {
-        "from": "10",
-        "color": "#ffc800",
-        "text": "",
-        "textType": "label"
-      },
-      {
-        "from": "0",
-        "color": "#ea5353",
-        "text": "",
-        "textType": "label"
-      }
-    ],
-    "min": 0,
-    "max": "100",
-    "sizeThickness": 16,
-    "sizeGap": 4,
-    "sizeKeyThickness": 8,
-    "styleRounded": true,
-    "styleGlow": false,
-    "className": "",
-    "x": 590,
-    "y": 340,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "84ffb4c991970ed9",
-    "type": "function",
-    "z": "e53b1d02762b092d",
-    "name": "data",
-    "func": "if (msg.payload == undefined) {\n    return msg;  \n} \n\nvar pm1  = msg.payload.PM1;\nvar pm25 = msg.payload.PM25;\nvar pm10 = msg.payload.PM10;\n\nvar msg1 = { payload: pm1, topic: \"PM1.0\" };\nvar msg2 = { payload: pm25, topic: \"PM2.5\" };\nvar msg3 = { payload: pm10, topic: \"PM10\" };\n\nreturn [msg1, msg2, msg3];\n",
-    "outputs": 3,
-    "timeout": 0,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 390,
-    "y": 420,
-    "wires": [
-      [
-        "649849556d44c30b"
-      ],
-      [
-        "649849556d44c30b"
-      ],
-      [
-        "649849556d44c30b"
-      ]
-    ]
-  },
-  {
-    "id": "649849556d44c30b",
-    "type": "ui-chart",
-    "z": "e53b1d02762b092d",
-    "group": "53924c45717ca49a",
-    "name": "Dust in tha air",
-    "label": "dust chart",
-    "order": 1,
-    "chartType": "line",
-    "category": "topic",
-    "categoryType": "msg",
-    "xAxisLabel": "",
-    "xAxisProperty": "",
-    "xAxisPropertyType": "timestamp",
-    "xAxisType": "time",
-    "xAxisFormat": "",
-    "xAxisFormatType": "auto",
-    "xmin": "",
-    "xmax": "",
-    "yAxisLabel": "",
-    "yAxisProperty": "payload",
-    "yAxisPropertyType": "msg",
-    "ymin": "0",
-    "ymax": "40",
-    "bins": 10,
-    "action": "append",
-    "stackSeries": false,
-    "pointShape": "circle",
-    "pointRadius": 4,
-    "showLegend": true,
-    "removeOlder": 1,
-    "removeOlderUnit": "3600",
-    "removeOlderPoints": "",
-    "colors": [
-      "#f5c211",
-      "#e66100",
-      "#c01c28",
-      "#2ca02c",
-      "#a347e1",
-      "#d62728",
-      "#ff9896",
-      "#9467bd",
-      "#c5b0d5"
-    ],
-    "textColor": [
-      "#666666"
-    ],
-    "textColorDefault": true,
-    "gridColor": [
-      "#e5e5e5"
-    ],
-    "gridColorDefault": true,
-    "width": 6,
-    "height": 8,
-    "className": "",
-    "interpolation": "linear",
-    "x": 600,
-    "y": 420,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "27c2f838e126175c",
-    "type": "function",
-    "z": "e53b1d02762b092d",
-    "name": "save2db",
-    "func": "if (msg.payload === undefined) {\n    return msg;\n}\n\nmsg.payload = [\n    {\n        pm1: parseInt(msg.payload.PM1),\n        pm25: parseInt(msg.payload.PM25),\n        pm10: parseInt(msg.payload.PM10),\n    },\n    {\n        standort: \"zimmer\",\n        sensor: \"hm300x\"\n    }\n];\n\nmsg.measurement = \"luftqualitaet\";\n\nreturn msg;",
-    "outputs": 1,
-    "timeout": 0,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 400,
-    "y": 520,
-    "wires": [
-      [
-        "27c9dc73018235bd",
-        "fad2a024ec16293a"
-      ]
-    ]
-  },
-  {
-    "id": "27c9dc73018235bd",
-    "type": "influxdb out",
-    "z": "e53b1d02762b092d",
-    "influxdb": "d76933d367057afb",
-    "name": "",
-    "measurement": "",
-    "precision": "",
-    "retentionPolicy": "",
-    "database": "database",
-    "precisionV18FluxV20": "ms",
-    "retentionPolicyV18Flux": "",
-    "org": "dinge",
-    "bucket": "luftqualitaet",
-    "x": 600,
-    "y": 520,
-    "wires": []
-  },
-  {
-    "id": "2359e3d4344c45bd",
-    "type": "inject",
-    "z": "e53b1d02762b092d",
-    "name": "messtest",
-    "props": [
-      {
-        "p": "payload"
-      },
-      {
-        "p": "topic",
-        "vt": "str"
-      }
-    ],
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "onceDelay": 0.1,
-    "topic": "",
-    "payload": "{\"PM1\":6,\"PM25\":6,\"PM10\":6}",
-    "payloadType": "json",
-    "x": 140,
-    "y": 520,
-    "wires": [
-      [
-        "27c2f838e126175c"
-      ]
-    ]
-  },
-  {
-    "id": "fad2a024ec16293a",
-    "type": "debug",
-    "z": "e53b1d02762b092d",
-    "name": "debug influxdb",
-    "active": true,
-    "tosidebar": true,
-    "console": false,
-    "tostatus": false,
-    "complete": "payload",
-    "targetType": "msg",
-    "statusVal": "",
-    "statusType": "auto",
-    "x": 600,
-    "y": 560,
-    "wires": []
-  },
-  {
-    "id": "067a7c507dfcf31c",
-    "type": "mqtt-broker",
-    "name": "my fochtman iot partikelmesser",
-    "broker": "172.20.10.9",
-    "port": 1883,
-    "clientid": "",
-    "autoConnect": true,
-    "usetls": false,
-    "protocolVersion": 4,
-    "keepalive": 60,
-    "cleansession": true,
-    "autoUnsubscribe": true,
-    "birthTopic": "",
-    "birthQos": "0",
-    "birthRetain": "false",
-    "birthPayload": "",
-    "birthMsg": {},
-    "closeTopic": "",
-    "closeQos": "0",
-    "closeRetain": "false",
-    "closePayload": "",
-    "closeMsg": {},
-    "willTopic": "",
-    "willQos": "0",
-    "willRetain": "false",
-    "willPayload": "",
-    "willMsg": {},
-    "userProps": "",
-    "sessionExpiry": ""
-  },
-  {
-    "id": "64d550f7eac26f37",
-    "type": "ui-group",
-    "name": "Battery",
-    "page": "e493ab9eaa1479f7",
-    "width": 6,
-    "height": 1,
-    "order": 2,
-    "showTitle": true,
-    "className": "",
-    "visible": "true",
-    "disabled": "false",
-    "groupType": "default"
-  },
-  {
-    "id": "53924c45717ca49a",
-    "type": "ui-group",
-    "name": "dust",
-    "page": "e493ab9eaa1479f7",
-    "width": 6,
-    "height": 1,
-    "order": 1,
-    "showTitle": true,
-    "className": "",
-    "visible": "true",
-    "disabled": "false",
-    "groupType": "default"
-  },
-  {
-    "id": "d76933d367057afb",
-    "type": "influxdb",
-    "hostname": "127.0.0.1",
-    "port": 8086,
-    "protocol": "http",
-    "database": "database",
-    "name": "influxdb",
-    "usetls": false,
-    "tls": "",
-    "influxdbVersion": "2.0",
-    "url": "http://localhost:8086",
-    "timeout": "1000",
-    "rejectUnauthorized": true
-  },
-  {
-    "id": "e493ab9eaa1479f7",
-    "type": "ui-page",
-    "name": "Page 1",
-    "ui": "eaac889f5e322718",
-    "path": "/page1",
-    "icon": "home",
-    "layout": "grid",
-    "theme": "21ebb853dba7f001",
-    "breakpoints": [
-      {
-        "name": "Default",
-        "px": 0,
-        "cols": 3
-      },
-      {
-        "name": "Tablet",
-        "px": 576,
-        "cols": 6
-      },
-      {
-        "name": "Small Desktop",
-        "px": 768,
-        "cols": 9
-      },
-      {
-        "name": "Desktop",
-        "px": 1024,
-        "cols": 12
-      }
-    ],
-    "order": 1,
-    "className": "",
-    "visible": "true",
-    "disabled": "false"
-  },
-  {
-    "id": "eaac889f5e322718",
-    "type": "ui-base",
-    "name": "My Dashboard",
-    "path": "/dashboard",
-    "appIcon": "",
-    "includeClientData": true,
-    "acceptsClientConfig": [
-      "ui-notification",
-      "ui-control"
-    ],
-    "showPathInSidebar": false,
-    "headerContent": "page",
-    "navigationStyle": "default",
-    "titleBarStyle": "default",
-    "showReconnectNotification": true,
-    "notificationDisplayTime": 1,
-    "showDisconnectNotification": true,
-    "allowInstall": false
-  },
-  {
-    "id": "21ebb853dba7f001",
-    "type": "ui-theme",
-    "name": "Default Theme",
-    "colors": {
-      "surface": "#ffffff",
-      "primary": "#0094CE",
-      "bgPage": "#eeeeee",
-      "groupBg": "#ffffff",
-      "groupOutline": "#cccccc"
+    {
+        "id": "e53b1d02762b092d",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
     },
-    "sizes": {
-      "density": "default",
-      "pagePadding": "12px",
-      "groupGap": "12px",
-      "groupBorderRadius": "4px",
-      "widgetGap": "12px"
+    {
+        "id": "067a7c507dfcf31c",
+        "type": "mqtt-broker",
+        "name": "my fochtman iot partikelmesser",
+        "broker": "172.20.10.9",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "eaac889f5e322718",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "21ebb853dba7f001",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "e493ab9eaa1479f7",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "eaac889f5e322718",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "21ebb853dba7f001",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": 0,
+                "cols": 3
+            },
+            {
+                "name": "Tablet",
+                "px": 576,
+                "cols": 6
+            },
+            {
+                "name": "Small Desktop",
+                "px": 768,
+                "cols": 9
+            },
+            {
+                "name": "Desktop",
+                "px": 1024,
+                "cols": 12
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "64d550f7eac26f37",
+        "type": "ui-group",
+        "name": "Battery",
+        "page": "e493ab9eaa1479f7",
+        "width": 6,
+        "height": 1,
+        "order": 2,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "53924c45717ca49a",
+        "type": "ui-group",
+        "name": "dust",
+        "page": "e493ab9eaa1479f7",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "d76933d367057afb",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "influxdb",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "timeout": "1000",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "f790f0b75932c580",
+        "type": "aedes broker",
+        "z": "e53b1d02762b092d",
+        "name": "",
+        "mqtt_port": 1883,
+        "mqtt_ws_bind": "port",
+        "mqtt_ws_port": "",
+        "mqtt_ws_path": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "persistence_bind": "memory",
+        "dburl": "",
+        "persist_to_file": false,
+        "usetls": false,
+        "x": 170,
+        "y": 220,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "75e09587ee6f0a20",
+        "type": "mqtt in",
+        "z": "e53b1d02762b092d",
+        "name": "",
+        "topic": "/sensors/laser",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "067a7c507dfcf31c",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 320,
+        "wires": [
+            [
+                "0b456f0cb46a8748",
+                "37116334c06e36e3",
+                "84ffb4c991970ed9",
+                "27c2f838e126175c"
+            ]
+        ]
+    },
+    {
+        "id": "0b456f0cb46a8748",
+        "type": "debug",
+        "z": "e53b1d02762b092d",
+        "name": "debug mqtt",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 410,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "37116334c06e36e3",
+        "type": "function",
+        "z": "e53b1d02762b092d",
+        "name": "battery",
+        "func": "if (msg.payload && msg.payload.Battery !== undefined) {\n    msg.payload = msg.payload.Battery;\n    \n} else {\n    msg.payload = -1;\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 320,
+        "wires": [
+            [
+                "fa739f5a72955e53",
+                "47eba4d6497c78eb"
+            ]
+        ]
+    },
+    {
+        "id": "fa739f5a72955e53",
+        "type": "ui-text",
+        "z": "e53b1d02762b092d",
+        "group": "64d550f7eac26f37",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "battery",
+        "label": "Percentage: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 570,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "47eba4d6497c78eb",
+        "type": "ui-gauge",
+        "z": "e53b1d02762b092d",
+        "name": "battery chart",
+        "group": "64d550f7eac26f37",
+        "order": 1,
+        "value": "payload",
+        "valueType": "msg",
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "%",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "40",
+                "color": "#5cd65c",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "10",
+                "color": "#ffc800",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "0",
+                "color": "#ea5353",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "100",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 590,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "84ffb4c991970ed9",
+        "type": "function",
+        "z": "e53b1d02762b092d",
+        "name": "data",
+        "func": "if (msg.payload == undefined) {\n    return msg;  \n} \n\nvar pm1  = msg.payload.PM1;\nvar pm25 = msg.payload.PM25;\nvar pm10 = msg.payload.PM10;\n\nvar msg1 = { payload: pm1, topic: \"PM1.0\" };\nvar msg2 = { payload: pm25, topic: \"PM2.5\" };\nvar msg3 = { payload: pm10, topic: \"PM10\" };\n\nreturn [msg1, msg2, msg3];\n",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 420,
+        "wires": [
+            [
+                "649849556d44c30b"
+            ],
+            [
+                "649849556d44c30b"
+            ],
+            [
+                "649849556d44c30b"
+            ]
+        ]
+    },
+    {
+        "id": "649849556d44c30b",
+        "type": "ui-chart",
+        "z": "e53b1d02762b092d",
+        "group": "53924c45717ca49a",
+        "name": "Dust in tha air",
+        "label": "dust chart",
+        "order": 1,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "0",
+        "ymax": "40",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#f5c211",
+            "#e66100",
+            "#c01c28",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 600,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "27c2f838e126175c",
+        "type": "function",
+        "z": "e53b1d02762b092d",
+        "name": "save2db",
+        "func": "if (msg.payload === undefined) return msg;\n\n// Hilfsfunktion zur sicheren Extraktion von Zahlen\nfunction extractNumber(value, fieldName) {\n    if (value === undefined || value === null) {\n        node.warn(`${fieldName}: undefined oder null`);\n        return NaN;\n    }\n\n    let num;\n    if (typeof value === 'string') {\n        // Entferne Leerzeichen und Einheiten (µg/m³, mg, etc.)\n        let cleaned = value.toString().replace(/[^0-9.,\\-]/g, '').replace(',', '.');\n        num = parseFloat(cleaned);\n    } else if (typeof value === 'number') {\n        num = value;\n    } else {\n        num = NaN;\n    }\n\n    // Plausibilitätscheck für PM-Werte (typischerweise 0-1000)\n    if (!isNaN(num) && (num < 0 || num > 1000)) {\n        node.warn(`${fieldName}: Unplausibler Wert ${num} (außerhalb 0-1000)`);\n    }\n\n    return num;\n}\n\nlet pm1 = extractNumber(msg.payload.PM1, 'PM1');\nlet pm25 = extractNumber(msg.payload.PM25, 'PM25');\nlet pm10 = extractNumber(msg.payload.PM10, 'PM10');\n\n// Nur speichern wenn alle Werte gültig sind\nif (isNaN(pm1) || isNaN(pm25) || isNaN(pm10)) {\n    node.warn(`Ungültige Werte - überspringe: PM1=${pm1}, PM25=${pm25}, PM10=${pm10}`);\n    return null;  // Nichts speichern\n}\n\n// Plausible Grenzwerte (optional)\nif (pm1 > 500 || pm25 > 500 || pm10 > 500) {\n    node.warn(`Sehr hohe Werte - möglicher Fehler: PM1=${pm1}, PM25=${pm25}, PM10=${pm10}`);\n    // Hier entscheiden: speichern oder verwerfen?\n    // return null;  // Zum Verwerfen\n}\n\n// ... deine Logik für pm1, pm25, pm10 ...\n\nmsg.measurement = \"luftqualitaet\";\nmsg.payload = { pm1: pm1, pm25: pm25, pm10: pm10 };\nmsg.tags = { standort: \"zimmer\", sensor: \"hm300x\" };\n// Lösche die timestamp-Zeile komplett oder setze sie auf null\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 520,
+        "wires": [
+            [
+                "27c9dc73018235bd"
+            ]
+        ]
+    },
+    {
+        "id": "27c9dc73018235bd",
+        "type": "influxdb out",
+        "z": "e53b1d02762b092d",
+        "influxdb": "d76933d367057afb",
+        "name": "",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "dinge",
+        "bucket": "luftqualitaet",
+        "x": 600,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "2359e3d4344c45bd",
+        "type": "inject",
+        "z": "e53b1d02762b092d",
+        "name": "messtest",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"PM1\":6,\"PM25\":6,\"PM10\":6}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 520,
+        "wires": [
+            [
+                "27c2f838e126175c"
+            ]
+        ]
+    },
+    {
+        "id": "6a0eee45720dc2e0",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@flowfuse/node-red-dashboard": "1.30.2",
+            "node-red-contrib-influxdb": "0.7.0",
+            "node-red-contrib-aedes": "1.2.0"
+        }
     }
-  },
-  {
-    "id": "7c91cb08b0408669",
-    "type": "global-config",
-    "env": [],
-    "modules": {
-      "node-red-contrib-aedes": "1.2.0",
-      "@flowfuse/node-red-dashboard": "1.30.2",
-      "node-red-contrib-influxdb": "0.7.0"
-    }
-  }
 ]
