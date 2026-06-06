@@ -19,7 +19,7 @@ def convert_influx_csv(input_file, output_file):
         
         # Writer für sauberes CSV
         writer = csv.writer(outfile)
-        writer.writerow(['Zeit', 'Messwert', 'Wert', 'Sensor', 'Standort'])
+        writer.writerow(['Zeit', 'Messwert', 'Wert'])
         
         # Daten verarbeiten
         for row in reader:
@@ -29,9 +29,7 @@ def convert_influx_csv(input_file, output_file):
                     time_idx = headers.index('_time')
                     field_idx = headers.index('_field')
                     value_idx = headers.index('_value')
-                    sensor_idx = headers.index('sensor')
-                    standort_idx = headers.index('standort')
-                    
+
                     zeit = row[time_idx]
                     # Zeit formatieren (optional: von ISO auf lesbares Format)
                     try:
@@ -43,13 +41,11 @@ def convert_influx_csv(input_file, output_file):
                     
                     messwert = row[field_idx]
                     wert = row[value_idx]
-                    sensor = row[sensor_idx] if sensor_idx < len(row) else ''
-                    standort = row[standort_idx] if standort_idx < len(row) else ''
                     
                     # Nur Zeilen mit tatsächlichen Werten (nicht-leer) schreiben
                     if wert and wert.strip():
                         wert = round(float(wert))
-                        writer.writerow([zeit_formatiert, messwert, wert, sensor, standort])
+                        writer.writerow([zeit_formatiert, messwert, wert])
                         
                 except ValueError as e:
                     print(f"Warnung: Konnte Spalten nicht finden - {e}")
